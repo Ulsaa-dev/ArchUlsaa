@@ -25,7 +25,7 @@ mount /dev/sda1 /mnt/boot/efi
 swapon /dev/sda2
 
 echo -n "**** Installing base system ****"
-pacstrap /mnt base networkmanager linux linux-firmware efibootmgr networkmanager vim amd-ucode base-devel sof-firmware
+pacstrap /mnt base networkmanager linux linux-lts linux-firmware efibootmgr networkmanager vim amd-ucode base-devel sof-firmware
 genfstab /mnt > /mnt/etc/fstab
 
 echo -ne "----------------------------------------------------
@@ -35,7 +35,7 @@ echo -ne "----------------------------------------------------
 arch-chroot /mnt
 ln -sf /usr/share/zoneinfo/Europe/Istanbul /etc/localtime
 hwclock --systohc
-sed -i '#tr_TR.UTF-8 UTF-8/tr_TR.UTF-8 UTF-8' /etc/locale.gen
+sed -n 's/#tr_TR.UTF-8 UTF-8/tr_TR.UTF-8 UTF-8' /etc/locale.gen
 locale-gen
 echo 'LANG=EN' > /etc/locale.conf
 echo 'KEYMAP=trq' > /etc/vconsole.conf
@@ -43,7 +43,7 @@ echo 'Archer' > /etc/hostname
 passwd
 useradd -m -G wheel -s /bin/bash ulsaa
 passwd ulsaa
-sed -i '# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL' /etc/sudoers
+sed -n 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL' /etc/sudoers
 
 systemctl enable NetworkManager
 grub-install /dev/sda
