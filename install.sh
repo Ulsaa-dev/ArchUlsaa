@@ -25,7 +25,7 @@ mount /dev/sda1 /mnt/boot/efi
 swapon /dev/sda2
 
 echo -n "**** Installing base system ****"
-pacstrap /mnt base networkmanager linux linux-lts linux-firmware efibootmgr networkmanager vim amd-ucode base-devel sof-firmware
+pacstrap /mnt base networkmanager linux linux-lts linux-firmware efibootmgr networkmanager vim base-devel sof-firmware
 genfstab /mnt > /mnt/etc/fstab
 
 echo -ne "----------------------------------------------------
@@ -44,6 +44,8 @@ passwd
 useradd -m -G wheel -s /bin/bash ulsaa
 passwd ulsaa
 sed -n 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL' /etc/sudoers
+
+pacman -S amd-ucode --noconfirm
 
 systemctl enable NetworkManager
 grub-install /dev/sda
