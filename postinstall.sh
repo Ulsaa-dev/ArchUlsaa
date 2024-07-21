@@ -4,12 +4,6 @@ git clone https://aur.archlinux.org/paru.git
 cd paru
 makepkg -si --noconfirm
 
-echo -n "**** Enabling multilib repo ****"
-sudo pacman -S neovim
-sudo nvim /etc/pacman.conf
-
-paru -Syu
-
 echo -n "**** Installing nvidia drivers ****"
 sudo pacman -S nvidia-lts nvidia-utils nvidia-settings linux-lts-headers
 sudo pacman -Sy lib32-nvidia-utils
